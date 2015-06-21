@@ -1,0 +1,58 @@
+---
+title: "mh370"
+author: "r rachakonda"
+date: "Sunday, June 21, 2015"
+output:
+  ioslides_presentation:
+    incremental: yes
+runtime: shiny
+---
+
+## Shiny Presentation
+
+This presentation is made as part of peer assessment of of Coursera course project for Developing data products. The sample passenger data set is used from MH 370 airliner disaster.
+
+To learn more, see [Interactive Documents](http://rmarkdown.rstudio.com/authoring_shiny.html).
+
+## Slide with Interactive Plot
+
+```{r, echo=FALSE}
+inputPanel(
+  selectInput("n_breaks", label = "Number of bins:",
+              choices = c(10, 20, 35, 50), selected = 20),
+  
+  sliderInput("bw_adjust", label = "Bandwidth adjustment:",
+              min = 0.2, max = 2, value = 1, step = 0.2)
+)
+```{r}
+
+```
+
+renderPlot({
+  hist(faithful$eruptions, probability = TRUE, breaks = as.numeric(input$n_breaks),
+       xlab = "Duration (minutes)", main = "Geyser eruption duration")
+  
+  dens <- density(faithful$eruptions, adjust = input$bw_adjust)
+  lines(dens, col = "blue")
+})
+```
+
+## Slide with Bullets
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+## Slide with R Code and Output
+
+```{r, echo=FALSE}
+library(ggplot2)
+mhdata <- read.csv("./MH_370.csv")
+g <- ggplot(mhdata, aes(Age, Pclass))
+p11 <- g + geom_point(aes(color=Sex))
+p12 <- g + geom_point(aes(color=Sex)) + labs(title="Titanic intro Exploratory Analysis") + labs(x="Age of Passenger", y="Passenger Class on boat(1-3)")
+p21 <- g + geom_point(aes(color=Sex)) + facet_grid(Survived ~.)
+p22 <- g + geom_point(aes(color=Sex)) + facet_grid(Survived ~.) + labs(title="Titanic intro Exploratory Analysis") + labs(x="Age of Passenger", y="Passenger Class on boat(1-3)")
+```
+
+
